@@ -31,9 +31,21 @@ class CategoriaAdmin(admin.ModelAdmin):
     ordering = ('nombre',)
 
 class CustomUserAdmin(UserAdmin):
+    pass
+    readonly_fields=("last_login",'date_joined')  
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
-        ('Datos', {'fields': ('first_name', 'last_name', 'cuil', 'telefono', 'domicilio', 'provincia', 'localidad')}),
+        ('Información Personal', {'fields': (
+            'first_name', 
+            'last_name', 
+            'cuil', 
+            'telefono', 
+            'domicilio', 
+            'provincia', 
+            'localidad',
+        )}),
+        ('Permisos', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Fechas importantes', {'fields': ('date_joined', 'last_login')}),
     )
     add_fieldsets = (
         (None, {
@@ -43,16 +55,41 @@ class CustomUserAdmin(UserAdmin):
                 'email',
                 'password1',
                 'password2',
+            )
+        }),
+        ('Información Personal', {
+            'classes': ('wide',),
+            'fields': (
                 'first_name',
                 'last_name',
                 'cuil',
                 'telefono',
                 'domicilio',
-                'provincia_id__provincia',
-                'localidad_id__localidad'
+                'provincia',
+                'localidad',
             )
         }),
+        ('Permisos', {
+            'classes': ('wide',),
+            'fields': (
+                'is_active',
+                'is_staff',
+                'is_superuser',
+                'groups',
+                'user_permissions'
+            )
+        }),
+        ('Fechas importantes', {
+            'classes': ('wide',),
+            'fields': ('date_joined',)
+        }),
     )
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj and obj.id:
+            return super(CustomUserAdmin, self).get_readonly_fields(request, obj)
+        else:
+            return ('last_login',)
 
 class ClienteAdmin(admin.ModelAdmin):
     form = ClienteForm

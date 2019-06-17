@@ -112,7 +112,7 @@ class Categoria(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.CharField(max_length=1000, blank=True)
-    categoria = models.OneToOneField(Categoria, on_delete=models.CASCADE, verbose_name='categoría del producto')
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='categoría del producto')
     stockMin = models.PositiveIntegerField(verbose_name='stock mínimo', default=1, validators=[MinValueValidator(1)])
     stockMax = models.PositiveIntegerField(verbose_name='stock máximo', default=1, validators=[MinValueValidator(1)])
     stockAct = models.PositiveIntegerField(verbose_name='stock disponible', default=1, validators=[MinValueValidator(1)])
@@ -120,7 +120,7 @@ class Producto(models.Model):
 
     def image_tag(self):
         return mark_safe('<div style="background-image: url(\'/%s\'); width: 50px; height: 50px; background-repeat: no-repeat; background-size: contain; background-position: center"></div>'% (self.imagen))
-    image_tag.short_description = 'Producto'
+    image_tag.short_description = 'Imagen'
 
     def __str__(self):
         return self.nombre

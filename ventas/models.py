@@ -25,12 +25,12 @@ class DetalleVenta(models.Model):
         producto = Producto.objects.get(
             nombre=self.producto
         )
-        producto.stockAct -= cantidad
+        producto.stockAct -= self.cantidad
         super(DetalleVenta, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         producto = Producto.objects.get(
             nombre=self.producto
         )
-        producto.stockAct += cantidad
+        producto.stockAct += slef.cantidad
         super(DetalleVenta, self).delete(*args, **kwargs)

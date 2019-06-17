@@ -64,7 +64,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             # os.path.join(BASE_DIR, 'tesis/templates'),
-            os.path.join(BASE_DIR, 'administrador/templates/')
+            os.path.join(BASE_DIR, 'administrador/templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {

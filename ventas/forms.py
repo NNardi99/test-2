@@ -2,8 +2,9 @@ from django import forms
 from datetime import datetime, date
 from administrador.models import Producto
 
-class MyForm(forms.Form):
-    fecha = forms.DateField(default=datetime.now)
+class MyForm(forms.ModelForm):
+    # fecha = forms.DateField(default=date.today)
+    # fecha = forms.DateField()
 
     def clean(self):
         cleaned_data = super().clean()
@@ -17,7 +18,7 @@ class MyForm(forms.Form):
             self.add_error('cantidad', "La cantidad no debe superar el stock actual de {}".format(product.stockAct))
         
         # Limitador de fecha
-        fecha = cleaned_data['fecha']
-        if fecha > datetime.now():
-            raise forms.ValidationError("La fecha no puede ser futuro!")
-        return fecha
+        # fecha = cleaned_data['fecha']
+        # if fecha > datetime.now():
+        #     raise forms.ValidationError("La fecha no puede ser futuro!")
+        # return fecha

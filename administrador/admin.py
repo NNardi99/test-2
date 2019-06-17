@@ -20,8 +20,9 @@ class LocalidadAdmin(admin.ModelAdmin):
     search_fields = ('localidad', 'provincia_id__provincia')
 
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('image_tag', 'nombre', 'categoria', 'stockAct')
+    list_display = ('id', 'image_tag', 'nombre', 'categoria', 'stockAct')
     search_fields = ('nombre', 'categoria_id__nombre')
+    ordering = ('id',)
 
     def get_form(self, request, obj=None, **kwargs):
         kwargs['widgets'] = {'descripcion': forms.Textarea}
@@ -31,8 +32,7 @@ class CategoriaAdmin(admin.ModelAdmin):
     ordering = ('nombre',)
 
 class CustomUserAdmin(UserAdmin):
-    pass
-    readonly_fields=("last_login",'date_joined')  
+    readonly_fields=('last_login','date_joined')  
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
         ('Información Personal', {'fields': (
@@ -90,13 +90,31 @@ class CustomUserAdmin(UserAdmin):
             return super(CustomUserAdmin, self).get_readonly_fields(request, obj)
         else:
             return ('last_login',)
+    
+    def get_form(self, request, obj=None, **kwargs):
+        kwargs['widgets'] = {
+            'cuil': forms.TextInput(attrs={'placeholder': 'xx-xxxxxxxx-x', 'class': 'vTextField'}),
+            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese el teléfono sin 0 ni 15', 'class': 'vTextField'})
+        }
+        return super().get_form(request, obj, **kwargs)
+    
+    list_display = ('id', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
+    search_fields = ('username', 'first_name', 'last_name')
+    ordering = ('id',)
 
 class ClienteAdmin(admin.ModelAdmin):
     form = ClienteForm
 
+    list_display = ('id', 'razon', 'cuit', 'contacto', 'activo')
+    search_fields = ('razon', 'cuit', 'contacto')
+    ordering = ('id',)
+
 class ProveedorAdmin(admin.ModelAdmin):
     form = ProveedorForm
 
+    list_display = ('id', 'razon', 'cuit', 'contacto', 'activo')
+    search_fields = ('razon', 'cuit', 'contacto')
+    ordering = ('id',)
 
 # Register your models here.
 

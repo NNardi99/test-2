@@ -17,6 +17,8 @@ from django.contrib import admin
 
 from django.urls import include, path, re_path
 
+# admin.site.site_header = 'Sprinkler'
+
 urlpatterns = [
     path('', admin.site.urls),
     path('chaining/', include('smart_selects.urls')),

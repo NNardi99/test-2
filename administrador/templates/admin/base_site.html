@@ -1,5 +1,7 @@
 {% extends "admin/base.html" %}
 
+{% load staticfiles %}
+
 {% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
 {% block extrastyle %}
@@ -10,7 +12,11 @@ display: none;
 </style>{% endblock %}
 
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <img src="{% static 'logo.png' %}" height="30px" />Sprinkler
+    </a>
+</h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

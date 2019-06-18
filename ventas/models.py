@@ -19,6 +19,7 @@ class DetalleVenta(models.Model):
 
     class Meta:
         verbose_name_plural = "Detalle de Ventas"
+        verbose_name = "Detalle de Venta"
 
 # Crear función para hacer override del save del model
     def save(self, *args, **kwargs):

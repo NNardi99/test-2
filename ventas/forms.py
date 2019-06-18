@@ -3,8 +3,6 @@ from datetime import datetime, date
 from administrador.models import Producto
 
 class MyForm(forms.ModelForm):
-    # fecha = forms.DateField(default=date.today)
-    # fecha = forms.DateField()
 
     def clean(self):
         cleaned_data = super().clean()
@@ -17,8 +15,15 @@ class MyForm(forms.ModelForm):
         if cd_cantidad>product.stockAct:
             self.add_error('cantidad', "La cantidad no debe superar el stock actual de {}".format(product.stockAct))
         
+class VentasForm(forms.ModelForm):
+    fecha = forms.DateField(
+        initial=date.today,
+        widget=forms.SelectDateWidget
+    )
         # Limitador de fecha
-        # fecha = cleaned_data['fecha']
-        # if fecha > datetime.now():
-        #     raise forms.ValidationError("La fecha no puede ser futuro!")
-        # return fecha
+    def clean(self):
+        cleaned_data = super().clean()
+        fecha = cleaned_data['fecha']
+        if fecha > datetime.now().date():
+            raise forms.ValidationError("La fecha no puede ser futuro!")
+        return fecha

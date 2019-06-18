@@ -9,9 +9,9 @@ class MyForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         # Limitador de stock
-        producto_id = cleaned_data.get("producto")
+        product = cleaned_data.get("producto")
         cd_cantidad = cleaned_data.get("cantidad")
-        product = Producto.objects.filter(id=producto_id).first()
+        #product = Producto.objects.filter(id=producto_id).first()
         if not product:
             self.add_error('producto', "Seleccione un producto")
         if cd_cantidad>product.stockAct:

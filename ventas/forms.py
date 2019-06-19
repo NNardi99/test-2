@@ -1,5 +1,6 @@
 from django import forms
 from datetime import datetime, date
+import datetime
 from administrador.models import Producto
 
 class MyForm(forms.ModelForm):
@@ -9,7 +10,7 @@ class MyForm(forms.ModelForm):
         # Limitador de stock
         product = cleaned_data.get("producto")
         cd_cantidad = cleaned_data.get("cantidad")
-        #product = Producto.objects.filter(id=producto_id).first()
+
         if not product:
             self.add_error('producto', "Seleccione un producto")
         if cd_cantidad>product.stockAct:
@@ -23,7 +24,6 @@ class VentasForm(forms.ModelForm):
         # Limitador de fecha
     def clean(self):
         cleaned_data = super().clean()
-        fecha = cleaned_data['fecha']
-        if fecha > datetime.now().date():
+        fecha = cleaned_data.get('fecha')
+        if fecha > datetime.date.today():
             raise forms.ValidationError("La fecha no puede ser futuro!")
-        return fecha

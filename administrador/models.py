@@ -6,6 +6,14 @@ from django.utils.safestring import mark_safe
 from django.core.validators import RegexValidator
 # Create your models here.
 
+class QuerySetManager(models.QuerySet):
+
+    def delete(self, *args, **kwargs):
+        for obj in self:
+            obj.is_active = True
+            obj.save()
+        #super(ImageQuerySet, self).delete(*args, **kwargs)
+
 class Provincia(models.Model):
     provincia = models.CharField(max_length=100)
 
@@ -46,6 +54,13 @@ class CustomUser(AbstractUser):
 
     def natural_key(self):
         return self.username
+    
+    # manager = QuerySetManager.as_manager()
+    
+    def delete(self, *args, **kwargs):
+        self.is_active = False
+        print (self.is_active)
+        self.save()
     
     class Meta:
         verbose_name = "Empleado"

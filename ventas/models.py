@@ -23,11 +23,12 @@ class DetalleVenta(models.Model):
 
 # Crear función para hacer override del save del model
     def save(self, *args, **kwargs):
-        producto = Producto.objects.get(
-            nombre=self.producto
-        )
-        producto.stockAct -= self.cantidad
-        producto.save()
+        if not self.id:
+            producto = Producto.objects.get(
+                nombre=self.producto
+            )
+            producto.stockAct -= self.cantidad
+            producto.save()
         super(DetalleVenta, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):

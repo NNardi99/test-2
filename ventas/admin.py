@@ -9,6 +9,12 @@ class DetalleVentaInline(admin.StackedInline):
     model = DetalleVenta
     extra = 1
     form = MyForm
+    
+    # The inlines can't be changed or deleted
+    def has_change_permission(self, request, obj=None):
+        return False
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 class VentaAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -25,6 +31,7 @@ class VentaAdmin(admin.ModelAdmin):
 
     list_display = ('codigo', 'vendedor', 'cliente', 'fecha')
     search_fields = ('vendedor', 'cliente', 'fecha')
+    list_filter = ('vendedor', 'cliente', 'fecha')
     ordering = ('codigo',)
 
 admin.site.register(Venta, VentaAdmin)

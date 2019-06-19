@@ -22,6 +22,7 @@ class LocalidadAdmin(admin.ModelAdmin):
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ('id', 'image_tag', 'nombre', 'categoria', 'stockAct')
     search_fields = ('nombre', 'categoria_id__nombre')
+    list_filter = ('categoria',)
     ordering = ('id',)
 
     def get_form(self, request, obj=None, **kwargs):
@@ -98,22 +99,58 @@ class CustomUserAdmin(UserAdmin):
         }
         return super().get_form(request, obj, **kwargs)
     
+    def change_active(self, request, queryset):
+        for username in queryset:
+            if username.is_active is True:
+                username.is_active = False
+                username.save()
+            else:
+                username.is_active = True
+                username.save()
+    change_active.short_description = 'Baja/Alta de Empleado'
+
     list_display = ('id', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
     search_fields = ('username', 'first_name', 'last_name')
+    list_filter = ('is_staff', 'is_active', 'groups')
+    actions = [change_active, ]
     ordering = ('id',)
 
 class ClienteAdmin(admin.ModelAdmin):
     form = ClienteForm
 
+    def change_active(self, request, queryset):
+        for razon in queryset:
+            if razon.activo is True:
+                razon.activo = False
+                razon.save()
+            else:
+                razon.activo = True
+                razon.save()
+    change_active.short_description = 'Baja/Alta de Cliente'
+
     list_display = ('id', 'razon', 'cuit', 'contacto', 'activo')
     search_fields = ('razon', 'cuit', 'contacto')
+    list_filter = ('provincia', 'localidad', 'activo')
+    actions = [change_active, ]
     ordering = ('id',)
 
 class ProveedorAdmin(admin.ModelAdmin):
     form = ProveedorForm
 
+    def change_active(self, request, queryset):
+        for razon in queryset:
+            if razon.activo is True:
+                razon.activo = False
+                razon.save()
+            else:
+                razon.activo = True
+                razon.save()
+    change_active.short_description = 'Baja/Alta de Proveedor'
+
     list_display = ('id', 'razon', 'cuit', 'contacto', 'activo')
     search_fields = ('razon', 'cuit', 'contacto')
+    list_filter = ('provincia', 'localidad', 'activo')
+    actions = [change_active, ]
     ordering = ('id',)
 
 # Register your models here.
@@ -126,3 +163,4 @@ admin.site.register(Cliente, ClienteAdmin)
 admin.site.register(Proveedor, ProveedorAdmin)
 admin.site.register(Categoria, CategoriaAdmin)
 admin.site.register(Producto, ProductoAdmin)
+admin.site.disable_action('delete_selected') # Cant' use the action delete_select globally

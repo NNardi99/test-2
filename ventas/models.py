@@ -7,15 +7,14 @@ from administrador.models import Producto, CustomUser, Cliente
 # # Create your models here.
 class Venta(models.Model):
     codigo = models.AutoField(primary_key=True)
-    vendedor = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    # detalle = models.ForeignKey(DetalleVenta, on_delete=models.CASCADE)
+    vendedor = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
     fecha = models.DateField(default=date.today)
 
 class DetalleVenta(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
     cantidad = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
-    venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
+    venta = models.ForeignKey(Venta, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name_plural = "Detalle de Ventas"

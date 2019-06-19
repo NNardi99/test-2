@@ -8,7 +8,6 @@ from administrador.models import (
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django import forms
-# from administrador.forms import EmpleadoForm, ClienteForm, ProveedorForm
 from administrador.forms import ClienteForm, ProveedorForm
 
 class ProvinciaAdmin(admin.ModelAdmin):
@@ -18,6 +17,9 @@ class ProvinciaAdmin(admin.ModelAdmin):
 class LocalidadAdmin(admin.ModelAdmin):
     list_display = ('provincia','localidad')
     search_fields = ('localidad', 'provincia_id__provincia')
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ('id', 'image_tag', 'nombre', 'categoria', 'stockAct')

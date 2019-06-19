@@ -25,7 +25,7 @@ class Provincia(models.Model):
 
 class Localidad(models.Model):
     localidad = models.CharField(max_length=100)
-    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
+    provincia = models.ForeignKey(Provincia, on_delete=models.PROTECT)
     
     class Meta:
         ordering = ["provincia"]
@@ -38,7 +38,7 @@ class CustomUser(AbstractUser):
     cuil = models.CharField(max_length=13, validators=[RegexValidator(r'^[0-9]{2}-[0-9]{8}-[0-9]$','El número ingresado es incorrecto','Número incorrecto')])
     telefono = models.CharField(max_length=10, validators=[RegexValidator(r'^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$','El número ingresado es incorrecto','Número incorrecto')])
     domicilio = models.CharField(max_length=50)
-    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, null=True)
+    provincia = models.ForeignKey(Provincia, on_delete=models.PROTECT)
     localidad = ChainedForeignKey(
         Localidad,
         chained_field="provincia",
@@ -46,7 +46,8 @@ class CustomUser(AbstractUser):
         show_all=False,
         auto_choose=True,
         sort=True,
-        null=True
+        null=True,
+        on_delete=models.PROTECT
     )
     
     def get_short_name(self):
@@ -75,14 +76,15 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=10, validators=[RegexValidator(r'^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$','El número ingresado es incorrecto','Número incorrecto')])
     email = models.EmailField(blank=True, verbose_name='e-mail')
     domicilio = models.CharField(max_length=50)
-    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
+    provincia = models.ForeignKey(Provincia, on_delete=models.PROTECT)
     localidad = ChainedForeignKey(
         Localidad,
         chained_field="provincia",
         chained_model_field="provincia",
         show_all=False,
         auto_choose=True,
-        sort=True
+        sort=True,
+        on_delete=models.PROTECT
     )
     contacto = models.CharField(blank=True, max_length=100)
     activo = models.BooleanField(default=True)
@@ -96,14 +98,15 @@ class Proveedor(models.Model):
     telefono = models.CharField(max_length=10, validators=[RegexValidator(r'^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$','El número ingresado es incorrecto','Número incorrecto')])
     email = models.EmailField(blank=True, verbose_name='e-mail')
     domicilio = models.CharField(max_length=50)
-    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
+    provincia = models.ForeignKey(Provincia, on_delete=models.PROTECT)
     localidad = ChainedForeignKey(
         Localidad,
         chained_field="provincia",
         chained_model_field="provincia",
         show_all=False,
         auto_choose=True,
-        sort=True
+        sort=True,
+        on_delete=models.PROTECT
     )
     contacto = models.CharField(blank=True, max_length=100)
     activo = models.BooleanField(default=True)
@@ -127,7 +130,7 @@ class Categoria(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.CharField(max_length=1000, blank=True)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='categoría del producto')
+    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT, verbose_name='categoría del producto')
     stockMin = models.PositiveIntegerField(verbose_name='stock mínimo', default=1, validators=[MinValueValidator(1)])
     stockMax = models.PositiveIntegerField(verbose_name='stock máximo', default=1, validators=[MinValueValidator(1)])
     stockAct = models.PositiveIntegerField(verbose_name='stock disponible', default=1, validators=[MinValueValidator(1)])

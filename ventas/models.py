@@ -11,10 +11,16 @@ class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
     fecha = models.DateField(default=date.today)
 
+    def delete(self, *args, **kwargs):
+        for item in self.items.all():
+            item.producto.stockAct+=item.cantidad
+            item.producto.save()
+        super(Venta, self).delete(*args, **kwargs)
+
 class DetalleVenta(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
     cantidad = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
-    venta = models.ForeignKey(Venta, on_delete=models.PROTECT)
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name="items")
 
     class Meta:
         verbose_name_plural = "Detalle de Ventas"

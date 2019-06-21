@@ -13,7 +13,7 @@ class MyForm(forms.ModelForm):
 
         if not product:
             self.add_error('producto', "Seleccione un producto")
-        if cd_cantidad>product.stockAct:
+        if cd_cantidad > product.stockAct:
             self.add_error('cantidad', "La cantidad no debe superar el stock actual de {}".format(product.stockAct))
         
 class VentasForm(forms.ModelForm):

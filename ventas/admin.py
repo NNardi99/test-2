@@ -13,8 +13,8 @@ class DetalleVentaInline(admin.StackedInline):
     # The inlines can't be changed or deleted
     def has_change_permission(self, request, obj=None):
         return False
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
 
 class VentaAdmin(admin.ModelAdmin):
     fieldsets = [

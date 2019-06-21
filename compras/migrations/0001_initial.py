@@ -12,31 +12,31 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('administrador', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('administrador', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Venta',
+            name='Compra',
             fields=[
                 ('codigo', models.AutoField(primary_key=True, serialize=False)),
                 ('fecha', models.DateField(default=datetime.date.today)),
-                ('cliente', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='administrador.Cliente')),
-                ('vendedor', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+                ('comprador', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+                ('proveedor', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='administrador.Proveedor')),
             ],
         ),
         migrations.CreateModel(
-            name='DetalleVenta',
+            name='DetalleCompra',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('cantidad', models.PositiveIntegerField(default=1, validators=[django.core.validators.MinValueValidator(1)])),
+                ('compra', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='compras.Compra')),
                 ('producto', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='administrador.Producto')),
-                ('venta', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='ventas.Venta')),
             ],
             options={
-                'verbose_name': 'Detalle de Venta',
-                'verbose_name_plural': 'Detalle de Ventas',
+                'verbose_name': 'Detalle de Compra',
+                'verbose_name_plural': 'Detalle de Compras',
             },
         ),
     ]

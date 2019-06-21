@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'smart_selects',
     'administrador',
     'ventas',
+    'compras',
     'admin_reorder',
 ]
 
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'tesis.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+print(BASE_DIR)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -144,6 +145,7 @@ ADMIN_REORDER = (
     # 'auth',
     # 'administrador',
     'ventas',
+    'compras',
 
     {
         'app': 'administrador', 'app': 'auth', 'label': 'Gestión de Empleados y Usuarios',

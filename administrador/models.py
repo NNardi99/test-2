@@ -38,7 +38,7 @@ class CustomUser(AbstractUser):
     cuil = models.CharField(max_length=13, validators=[RegexValidator(r'^[0-9]{2}-[0-9]{8}-[0-9]$','El número ingresado es incorrecto','Número incorrecto')])
     telefono = models.CharField(max_length=10, validators=[RegexValidator(r'^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$','El número ingresado es incorrecto','Número incorrecto')])
     domicilio = models.CharField(max_length=50)
-    provincia = models.ForeignKey(Provincia, on_delete=models.PROTECT)
+    provincia = models.ForeignKey(Provincia, null = True, on_delete=models.PROTECT)
     localidad = ChainedForeignKey(
         Localidad,
         chained_field="provincia",
@@ -46,7 +46,7 @@ class CustomUser(AbstractUser):
         show_all=False,
         auto_choose=True,
         sort=True,
-        null=True,
+        null = True,
         on_delete=models.PROTECT
     )
     

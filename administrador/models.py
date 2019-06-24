@@ -60,7 +60,7 @@ class CustomUser(AbstractUser):
     
     def delete(self, *args, **kwargs):
         self.is_active = False
-        print (self.is_active)
+        # print (self.is_active)
         self.save()
     
     class Meta:

@@ -33,5 +33,6 @@ class VentaAdmin(admin.ModelAdmin):
     search_fields = ('vendedor', 'cliente', 'fecha')
     list_filter = ('vendedor', 'cliente', 'fecha')
     ordering = ('codigo',)
+    change_list_template = 'admin/change_list_graph_sell.html'
 
 admin.site.register(Venta, VentaAdmin)

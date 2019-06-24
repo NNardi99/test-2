@@ -18,14 +18,15 @@ class LocalidadAdmin(admin.ModelAdmin):
     list_display = ('provincia','localidad')
     search_fields = ('localidad', 'provincia_id__provincia')
 
-    def has_change_permission(self, request, obj=None):
-        return False
+    # def has_change_permission(self, request, obj=None):
+    #     return False
 
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ('id', 'image_tag', 'nombre', 'categoria', 'stockAct')
     search_fields = ('nombre', 'categoria_id__nombre')
     list_filter = ('categoria',)
     ordering = ('id',)
+    change_list_template = 'admin/change_list_graph_product.html'
 
     def get_form(self, request, obj=None, **kwargs):
         kwargs['widgets'] = {'descripcion': forms.Textarea}
@@ -116,6 +117,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_active', 'groups')
     actions = [change_active, ]
     ordering = ('id',)
+    change_list_template = 'admin/change_list_graph_user.html'
 
 class ClienteAdmin(admin.ModelAdmin):
     form = ClienteForm
@@ -131,10 +133,11 @@ class ClienteAdmin(admin.ModelAdmin):
     change_active.short_description = 'Baja/Alta de Cliente'
 
     list_display = ('id', 'razon', 'cuit', 'contacto', 'activo')
-    search_fields = ('razon', 'cuit', 'contacto')
+    search_fields = ('razon', 'cuit', 'contacto', 'localidad_id__localidad')
     list_filter = ('provincia', 'localidad', 'activo')
     actions = [change_active, ]
     ordering = ('id',)
+    change_list_template = 'admin/change_list_graph_client.html'
 
 class ProveedorAdmin(admin.ModelAdmin):
     form = ProveedorForm
@@ -150,10 +153,11 @@ class ProveedorAdmin(admin.ModelAdmin):
     change_active.short_description = 'Baja/Alta de Proveedor'
 
     list_display = ('id', 'razon', 'cuit', 'contacto', 'activo')
-    search_fields = ('razon', 'cuit', 'contacto')
+    search_fields = ('razon', 'cuit', 'contacto', 'localidad_id__localidad')
     list_filter = ('provincia', 'localidad', 'activo')
     actions = [change_active, ]
     ordering = ('id',)
+    change_list_template = 'admin/change_list_graph_client.html'
 
 # Register your models here.
 

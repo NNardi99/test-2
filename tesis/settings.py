@@ -65,7 +65,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             # os.path.join(BASE_DIR, 'tesis/templates'),
-            os.path.join(BASE_DIR, 'administrador/templates')
+            os.path.join(BASE_DIR, 'administrador/templates'),
+            os.path.join(BASE_DIR, 'ventas/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -84,7 +85,6 @@ WSGI_APPLICATION = 'tesis.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-print(BASE_DIR)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

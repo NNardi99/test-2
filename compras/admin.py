@@ -33,5 +33,6 @@ class CompraAdmin(admin.ModelAdmin):
     search_fields = ('comprador', 'proveedor', 'fecha')
     list_filter = ('comprador', 'proveedor', 'fecha')
     ordering = ('codigo',)
+    change_list_template = 'admin/change_list_graph_buy.html'
 
 admin.site.register(Compra, CompraAdmin)

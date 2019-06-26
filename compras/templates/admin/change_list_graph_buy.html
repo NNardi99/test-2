@@ -1,4 +1,4 @@
-{% extends "admin/change_list.html" %} {% load staticfiles ventas %} {% block extrahead %}
+{% extends "admin/change_list.html" %} {% load staticfiles compras %} {% block extrahead %}
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -35,23 +35,23 @@
       },
       options: options
     });
-    ctx = document.getElementById("item-chart");
-    {% regroup cl.queryset|dictsort:"items" by items as items_list %}
-    {% saludar cl.queryset as mapa %}
-    // console.log("{{ cl.queryset|dictsort:'items' }}")
-    // console.log("{{cl.queryset.0}}")
-    // console.log("{{mapa}}")
-    var lineChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: [{% for lbl in mapa %}"{{lbl}}", {% endfor %}],
-        datasets: [{
-          data: [{% for lbl, qty in mapa.items %}'{{ qty }}', {% endfor %}],
-          backgroundColor: [{% for lbl in mapa %}randomColorGenerator(), {% endfor %}]
-        }]
-      },
-      options: options
-    });
+    // ctx = document.getElementById("item-chart");
+    // {% regroup cl.queryset|dictsort:"items" by items as items_list %}
+    // {% saludar cl.queryset as mapa %}
+    // // console.log("{{ cl.queryset|dictsort:'items' }}")
+    // // console.log("{{cl.queryset.0}}")
+    // // console.log("{{mapa}}")
+    // var lineChart = new Chart(ctx, {
+    //   type: 'doughnut',
+    //   data: {
+    //     labels: [{% for lbl in mapa %}"{{lbl}}", {% endfor %}],
+    //     datasets: [{
+    //       data: [{% for lbl, qty in mapa.items %}'{{ qty }}', {% endfor %}],
+    //       backgroundColor: [{% for lbl in mapa %}randomColorGenerator(), {% endfor %}]
+    //     }]
+    //   },
+    //   options: options
+    // });
   };
 
 </script> {% endblock %} {% block content %}
@@ -62,9 +62,9 @@
     <h4>Clientes</h4>
     <canvas id="client-chart" style="width: 100px !important;"></canvas>
   </div>
-  <div class="col-sm-4">
+  <!-- <div class="col-sm-4">
       <h4>Productos</h4>
     <canvas id="item-chart" style="width: 100px !important;"></canvas>
-  </div>
+  </div> -->
 </div>
 {{ block.super }} {% endblock %}

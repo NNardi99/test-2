@@ -127,10 +127,21 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombre
 
+class Riesgo(models.Model):
+    riesgo = models.CharField(max_length=150)
+
+    class Meta:
+        verbose_name = "Tipo de Riesgo"
+        verbose_name_plural = "Tipos de Riesgos"
+    
+    def __str__(self):
+        return self.riesgo
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.CharField(max_length=1000, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT, verbose_name='categoría del producto')
+    riesgo = models.ForeignKey(Riesgo, on_delete=models.PROTECT, verbose_name='tipo de riesgo')
     stockMin = models.PositiveIntegerField(verbose_name='stock mínimo', default=1, validators=[MinValueValidator(1)])
     stockMax = models.PositiveIntegerField(verbose_name='stock máximo', default=1, validators=[MinValueValidator(1)])
     stockAct = models.PositiveIntegerField(verbose_name='stock disponible', default=1, validators=[MinValueValidator(1)])

@@ -2,7 +2,7 @@ from django.contrib import admin
 from administrador.models import (
     Provincia, Localidad, 
     CustomUser,
-    Cliente, Proveedor, Categoria,
+    Cliente, Proveedor, Categoria, Riesgo,
     Producto
 )
 from django.contrib.auth.admin import UserAdmin
@@ -22,9 +22,9 @@ class LocalidadAdmin(admin.ModelAdmin):
     #     return False
 
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'image_tag', 'nombre', 'categoria', 'stockAct')
+    list_display = ('id', 'image_tag', 'nombre', 'categoria', 'riesgo', 'stockAct')
     search_fields = ('nombre', 'categoria_id__nombre')
-    list_filter = ('categoria',)
+    list_filter = ('categoria', 'riesgo')
     ordering = ('id',)
     change_list_template = 'admin/change_list_graph_product.html'
 
@@ -34,6 +34,9 @@ class ProductoAdmin(admin.ModelAdmin):
 
 class CategoriaAdmin(admin.ModelAdmin):
     ordering = ('nombre',)
+
+class RiesgoAdmin(admin.ModelAdmin):
+    ordering = ('riesgo',)
 
 class CustomUserAdmin(UserAdmin):
     readonly_fields=('last_login','date_joined')  
@@ -168,5 +171,6 @@ admin.site.register(Localidad, LocalidadAdmin)
 admin.site.register(Cliente, ClienteAdmin)
 admin.site.register(Proveedor, ProveedorAdmin)
 admin.site.register(Categoria, CategoriaAdmin)
+admin.site.register(Riesgo, RiesgoAdmin)
 admin.site.register(Producto, ProductoAdmin)
 admin.site.disable_action('delete_selected') # Cant' use the action delete_select globally

@@ -22,7 +22,13 @@ class LocalidadAdmin(admin.ModelAdmin):
     #     return False
 
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'image_tag', 'nombre', 'categoria', 'riesgo', 'stockAct')
+    # form = ProductoForm
+
+    def stock_and_unity(obj):
+        return "%s %s" % (obj.stockAct, obj.get_unidad_display())
+    stock_and_unity.short_description = 'Stock disponible'
+
+    list_display = ('id', 'image_tag', 'nombre', 'categoria', 'riesgo', stock_and_unity)
     search_fields = ('nombre', 'categoria_id__nombre')
     list_filter = ('categoria', 'riesgo')
     ordering = ('id',)

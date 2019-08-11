@@ -137,6 +137,8 @@ class Riesgo(models.Model):
     def __str__(self):
         return self.riesgo
 
+STOCK_UNIT_CHOICES = [('1','unidades'), ('2','pares'), ('3','litros')]
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.CharField(max_length=1000, blank=True)
@@ -145,6 +147,7 @@ class Producto(models.Model):
     stockMin = models.PositiveIntegerField(verbose_name='stock mínimo', default=1, validators=[MinValueValidator(1)])
     stockMax = models.PositiveIntegerField(verbose_name='stock máximo', default=1, validators=[MinValueValidator(1)])
     stockAct = models.PositiveIntegerField(verbose_name='stock disponible', default=1, validators=[MinValueValidator(1)])
+    unidad = models.CharField(max_length=100, choices=STOCK_UNIT_CHOICES)
     imagen = models.ImageField(upload_to='./static')
 
     def image_tag(self):

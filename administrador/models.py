@@ -137,10 +137,20 @@ class Riesgo(models.Model):
     def __str__(self):
         return self.riesgo
 
+class Marca(models.Model):
+    nombre = models.CharField(max_length=150)
+
+    class Meta:
+        verbose_name_plural = "Marcas"
+
+    def __str__(self):
+        return self.nombre
+
 STOCK_UNIT_CHOICES = [('1','unidades'), ('2','pares'), ('3','litros')]
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
+    marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
     descripcion = models.CharField(max_length=1000, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT, verbose_name='categoría del producto')
     riesgo = models.ForeignKey(Riesgo, on_delete=models.PROTECT, verbose_name='tipo de riesgo')

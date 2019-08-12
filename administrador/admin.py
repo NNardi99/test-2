@@ -3,7 +3,7 @@ from administrador.models import (
     Provincia, Localidad, 
     CustomUser,
     Cliente, Proveedor, Categoria, Riesgo,
-    Producto
+    Producto, Marca
 )
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -21,6 +21,9 @@ class LocalidadAdmin(admin.ModelAdmin):
     # def has_change_permission(self, request, obj=None):
     #     return False
 
+class MarcaAdmin(admin.ModelAdmin):
+    ordering = ('nombre',)
+
 class ProductoAdmin(admin.ModelAdmin):
     # form = ProductoForm
 
@@ -28,9 +31,9 @@ class ProductoAdmin(admin.ModelAdmin):
         return "%s %s" % (obj.stockAct, obj.get_unidad_display())
     stock_and_unity.short_description = 'Stock disponible'
 
-    list_display = ('id', 'image_tag', 'nombre', 'categoria', 'riesgo', stock_and_unity)
-    search_fields = ('nombre', 'categoria_id__nombre')
-    list_filter = ('categoria', 'riesgo')
+    list_display = ('id', 'image_tag', 'nombre', 'marca', 'categoria', 'riesgo', stock_and_unity)
+    search_fields = ('nombre', 'categoria_id__nombre', 'marca_id__nombre')
+    list_filter = ('categoria', 'riesgo', 'marca')
     ordering = ('id',)
     change_list_template = 'admin/change_list_graph_product.html'
 
@@ -178,5 +181,6 @@ admin.site.register(Cliente, ClienteAdmin)
 admin.site.register(Proveedor, ProveedorAdmin)
 admin.site.register(Categoria, CategoriaAdmin)
 admin.site.register(Riesgo, RiesgoAdmin)
+admin.site.register(Marca, MarcaAdmin)
 admin.site.register(Producto, ProductoAdmin)
 admin.site.disable_action('delete_selected') # Cant' use the action delete_select globally

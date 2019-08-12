@@ -159,7 +159,7 @@ ADMIN_REORDER = (
 
     {
         'app': 'administrador', 'label': 'Gestión de Productos',
-        'models': ('administrador.Producto', 'administrador.Categoria', 'administrador.Riesgo')
+        'models': ('administrador.Producto', 'administrador.Categoria', 'administrador.Riesgo', 'administrador.Marca')
     },
 
     {

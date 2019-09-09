@@ -148,8 +148,6 @@ class Marca(models.Model):
 
 STOCK_UNIT_CHOICES = [('1','unidades'), ('2','pares'), ('3','litros')]
 
-STATES = [('1','Pendiente'), ('2','Vendido'), ('3','Cancelado')]
-
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
@@ -160,7 +158,6 @@ class Producto(models.Model):
     stockMax = models.PositiveIntegerField(verbose_name='stock máximo', default=1, validators=[MinValueValidator(1)])
     stockAct = models.PositiveIntegerField(verbose_name='stock disponible', default=1, validators=[MinValueValidator(1)])
     unidad = models.CharField(max_length=100, choices=STOCK_UNIT_CHOICES)
-    estado = models.CharField(max_length=100, choices=STATES)
     imagen = models.ImageField(upload_to='./static')
 
     def image_tag(self):

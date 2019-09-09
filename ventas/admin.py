@@ -21,6 +21,7 @@ class VentaAdmin(admin.ModelAdmin):
         ('Fecha de Venta', {'fields': ['fecha']}),
         ('Vendedor', {'fields': ['vendedor']}),
         ('Cliente', {'fields': ['cliente']}),
+        ('Estado', {'fields': ['estado']}),
     ]
 
     inlines = [
@@ -29,9 +30,9 @@ class VentaAdmin(admin.ModelAdmin):
 
     form = VentasForm
 
-    list_display = ('codigo', 'vendedor', 'cliente', 'fecha')
-    search_fields = ('vendedor', 'cliente', 'fecha')
-    list_filter = ('vendedor', 'cliente', 'fecha')
+    list_display = ('codigo', 'vendedor', 'cliente', 'fecha', 'estado')
+    search_fields = ('vendedor', 'cliente', 'fecha', 'estado')
+    list_filter = ('vendedor', 'cliente', 'fecha', 'estado')
     ordering = ('codigo',)
     change_list_template = 'admin/change_list_graph_sell.html'
 

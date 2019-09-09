@@ -5,10 +5,14 @@ from datetime import date
 from administrador.models import Producto, CustomUser, Proveedor
 
 # # Create your models here.
+
+STATES = [('1','Pendiente'), ('2','Vendido'), ('3','Cancelado')]
+
 class Compra(models.Model):
     codigo = models.AutoField(primary_key=True)
     comprador = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT)
+    estado = models.CharField(max_length=100, choices=STATES)
     fecha = models.DateField(default=date.today)
 
     def delete(self, *args, **kwargs):

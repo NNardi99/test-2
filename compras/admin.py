@@ -21,6 +21,7 @@ class CompraAdmin(admin.ModelAdmin):
         ('Fecha de Compra', {'fields': ['fecha']}),
         ('Comprador', {'fields': ['comprador']}),
         ('Proveedor', {'fields': ['proveedor']}),
+        ('Estado', {'fields': ['estado']}),
     ]
 
     inlines = [
@@ -29,9 +30,9 @@ class CompraAdmin(admin.ModelAdmin):
 
     form = ComprasForm
 
-    list_display = ('codigo', 'comprador', 'proveedor', 'fecha')
-    search_fields = ('comprador', 'proveedor', 'fecha')
-    list_filter = ('comprador', 'proveedor', 'fecha')
+    list_display = ('codigo', 'comprador', 'proveedor', 'fecha', 'estado')
+    search_fields = ('comprador', 'proveedor', 'fecha', 'estado')
+    list_filter = ('comprador', 'proveedor', 'fecha', 'estado')
     ordering = ('codigo',)
     change_list_template = 'admin/change_list_graph_buy.html'
 

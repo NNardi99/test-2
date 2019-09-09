@@ -31,9 +31,9 @@ class ProductoAdmin(admin.ModelAdmin):
         return "%s %s" % (obj.stockAct, obj.get_unidad_display())
     stock_and_unity.short_description = 'Stock disponible'
 
-    list_display = ('id', 'image_tag', 'nombre', 'marca', 'categoria', 'riesgo', stock_and_unity)
-    search_fields = ('nombre', 'categoria_id__nombre', 'marca_id__nombre')
-    list_filter = ('categoria', 'riesgo', 'marca')
+    list_display = ('id', 'image_tag', 'nombre', 'marca', 'categoria', 'riesgo', stock_and_unity, 'estado')
+    search_fields = ('nombre', 'categoria_id__nombre', 'marca_id__nombre', 'estado')
+    list_filter = ('categoria', 'riesgo', 'marca', 'estado')
     ordering = ('id',)
     change_list_template = 'admin/change_list_graph_product.html'
 

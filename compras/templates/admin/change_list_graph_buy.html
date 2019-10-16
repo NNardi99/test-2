@@ -14,7 +14,8 @@
       position: 'left'
     },
     title: {
-      display: true
+      display: true,
+      text: "Clientes"
     },
     animation: {
       animateScale: true,
@@ -55,16 +56,19 @@
   };
 
 </script> {% endblock %} {% block content %}
-<h1> Gráfico </h1>
+<!-- <h1> Gráfico </h1> -->
 <hr>
 <div class="row">
   <div class="col-sm-4">
-    <h4>Clientes</h4>
+    <!-- <h4>Clientes</h4> -->
     <canvas id="client-chart" style="width: 100px !important;"></canvas>
   </div>
   <!-- <div class="col-sm-4">
       <h4>Productos</h4>
     <canvas id="item-chart" style="width: 100px !important;"></canvas>
   </div> -->
+</div>
+<div class="row">
+  <div><br><br><br><br></div>
 </div>
 {{ block.super }} {% endblock %}

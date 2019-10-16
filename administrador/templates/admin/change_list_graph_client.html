@@ -7,14 +7,30 @@
   var randomColorGenerator = function () {
     return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
   };
-  var options = {
+  var optionsActividad = {
     responsive: true,
     maintainAspectRatio: true,
     legend: {
       position: 'left'
     },
     title: {
-      display: true
+      display: true,
+      text: "Estado"
+    },
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+  };
+  var optionsLocalidad = {
+    responsive: true,
+    maintainAspectRatio: true,
+    legend: {
+      position: 'left'
+    },
+    title: {
+      display: true,
+      text: "Localidad"
     },
     animation: {
       animateScale: true,
@@ -35,7 +51,7 @@
           backgroundColor: [{% for activo in activo_list %}randomColorGenerator(), {% endfor %}]
         }]
       },
-      options: options
+      options: optionsActividad
     });
     ctx = document.getElementById("localidad-chart");
     {% regroup cl.queryset|dictsort:"localidad_id" by localidad as localidad_list %}
@@ -48,12 +64,12 @@
           backgroundColor: [{% for localidad in localidad_list %}randomColorGenerator(), {% endfor %}]
         }]
       },
-      options: options
+      options: optionsLocalidad
     });
   };
 
 </script> {% endblock %} {% block content %}
-<h1> Gráfico </h1>
+<!-- <h1> Gráfico </h1> -->
 <hr>
 <div class="row">
   <div class="col-sm-4">
@@ -62,5 +78,8 @@
   <div class="col-sm-4">
     <canvas id="localidad-chart" style="width: 100px !important;"></canvas>
   </div>
+</div>
+<div class="row">
+  <div><br><br><br><br></div>
 </div>
 {{ block.super }} {% endblock %}

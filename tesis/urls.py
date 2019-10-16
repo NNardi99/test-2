@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 
 from django.urls import include, path, re_path
-
+from ventas.views import Get5Products
 # admin.site.site_header = 'Sprinkler'
 
 urlpatterns = [
     path('', admin.site.urls),
+    path('top_five/', Get5Products.as_view()),
     path('chaining/', include('smart_selects.urls')),
 ]

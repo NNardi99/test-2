@@ -1,0 +1,51 @@
+<canvas id="top5-chart"></canvas>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+<script>
+var options = {
+    responsive: true,
+    maintainAspectRatio: true,
+    legend: {
+        // position: 'left'
+        display: false,
+    },
+    title: {
+        display: true,
+        text: '5 Productos más vendidos'
+    },
+    scales: {
+        xAxes: [{
+            stacked: true
+        }],
+        yAxes: [{
+            stacked: true
+        }]
+    },
+    animation: {
+        animateScale: true,
+        animateRotate: true
+}
+};
+
+var randomColorGenerator = function () {
+    return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+};
+
+ctx = document.getElementById("top5-chart");
+    
+var lineChart = new Chart(ctx, {
+    type: 'bar',
+    // type: 'polarArea',
+    data: {
+        labels: [{% for product in top_five %}'{{ product.producto__nombre }}',{% endfor %}],
+        datasets: [{
+            data: [{% for product in top_five %}'{{product.sum_prod}}', {% endfor %}],
+            backgroundColor: [{% for product in top_five %}randomColorGenerator(), {% endfor %}]
+        }]
+    },
+    options: options
+});
+
+</script>

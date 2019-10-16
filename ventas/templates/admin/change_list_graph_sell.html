@@ -1,4 +1,4 @@
-{% extends "admin/change_list.html" %} {% load staticfiles ventas %} {% block extrahead %}
+{% extends "admin/change_list.html"%} {% load staticfiles ventas %} {% block extrahead %}
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -7,14 +7,30 @@
   var randomColorGenerator = function () {
     return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
   };
-  var options = {
+  var optionsClientes = {
     responsive: true,
     maintainAspectRatio: true,
     legend: {
       position: 'left'
     },
     title: {
-      display: true
+      display: true,
+      text: 'Clientes'
+    },
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+  };
+  var optionsProductos = {
+    responsive: true,
+    maintainAspectRatio: true,
+    legend: {
+      position: 'left'
+    },
+    title: {
+      display: true,
+      text: 'Productos'
     },
     animation: {
       animateScale: true,
@@ -33,7 +49,7 @@
           backgroundColor: [{% for cliente in cliente_list %}randomColorGenerator(), {% endfor %}]
         }]
       },
-      options: options
+      options: optionsClientes
     });
     ctx = document.getElementById("item-chart");
     {% regroup cl.queryset|dictsort:"items" by items as items_list %}
@@ -50,8 +66,18 @@
           backgroundColor: [{% for lbl in mapa %}randomColorGenerator(), {% endfor %}]
         }]
       },
-      options: options
+      options: optionsProductos
     });
+
+    $.ajax({
+      url:'/top_five/',
+      method:'GET',
+      success:function(data){
+        $('#grafico').html(data);
+      }
+    })
+
+    
   };
 
 </script> {% endblock %} {% block content %}
@@ -59,12 +85,18 @@
 <hr>
 <div class="row">
   <div class="col-sm-4">
-    <h4>Clientes</h4>
+    <!-- <h4>Clientes</h4> -->
     <canvas id="client-chart" style="width: 100px !important;"></canvas>
   </div>
   <div class="col-sm-4">
-      <h4>Productos</h4>
+      <!-- <h4>Productos</h4> -->
     <canvas id="item-chart" style="width: 100px !important;"></canvas>
   </div>
+  <div class="col-sm-4">
+    <div id="grafico"></div>
+  </div>
+</div>
+<div class="row">
+  <div><br><br><br><br></div>
 </div>
 {{ block.super }} {% endblock %}

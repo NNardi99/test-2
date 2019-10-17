@@ -53,14 +53,3 @@ var lineChart = new Chart(ctx, {
 });
 
 </script>
-
-<!-- labels: ['Productos'],
-        datasets: [
-            {% for product in top_five %}
-                {
-                    label: '{{product.producto__nombre}}',
-                    data: ['{{product.sum_prod}}'],
-                    backgroundColor: randomColorGenerator()
-                },
-            {% endfor %}
-        ] -->

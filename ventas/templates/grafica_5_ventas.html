@@ -9,18 +9,17 @@ var options = {
     maintainAspectRatio: true,
     legend: {
         // position: 'left'
-        display: false,
+        display: true,
     },
     title: {
         display: true,
         text: '5 Productos más vendidos'
     },
     scales: {
-        xAxes: [{
-            stacked: true
-        }],
         yAxes: [{
-            stacked: true
+            ticks: {
+                beginAtZero: true
+            }
         }]
     },
     animation: {
@@ -39,13 +38,29 @@ var lineChart = new Chart(ctx, {
     type: 'bar',
     // type: 'polarArea',
     data: {
-        labels: [{% for product in top_five %}'{{ product.producto__nombre }}',{% endfor %}],
-        datasets: [{
-            data: [{% for product in top_five %}'{{product.sum_prod}}', {% endfor %}],
-            backgroundColor: [{% for product in top_five %}randomColorGenerator(), {% endfor %}]
-        }]
+        labels: ['Productos'],
+        datasets: [
+            {% for product in top_five %}
+                {
+                    label: '{{product.producto__nombre}}',
+                    data: ['{{product.sum_prod}}'],
+                    backgroundColor: randomColorGenerator()
+                },
+            {% endfor %}
+        ]
     },
     options: options
 });
 
 </script>
+
+<!-- labels: ['Productos'],
+        datasets: [
+            {% for product in top_five %}
+                {
+                    label: '{{product.producto__nombre}}',
+                    data: ['{{product.sum_prod}}'],
+                    backgroundColor: randomColorGenerator()
+                },
+            {% endfor %}
+        ] -->

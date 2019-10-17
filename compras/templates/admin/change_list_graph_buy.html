@@ -15,7 +15,7 @@
     },
     title: {
       display: true,
-      text: "Clientes"
+      text: "Proveedor"
     },
     animation: {
       animateScale: true,
@@ -24,49 +24,26 @@
   };
   window.onload = function () {
     var ctx = document.getElementById("client-chart");
-    {% regroup cl.queryset|dictsort:"cliente_id" by cliente as cliente_list %}
+    {% regroup cl.queryset|dictsort:"proveedor_id" by proveedor as proveedor_list %}
     var lineChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: [{% for cliente in cliente_list %}'{{ cliente.grouper }}',{% endfor %}],
+        labels: [{% for proveedor in proveedor_list %}'{{ proveedor.grouper }}',{% endfor %}],
         datasets: [{
-          data: [{% for cliente in cliente_list %}'{{ cliente.list|length }}', {% endfor %}],
-          backgroundColor: [{% for cliente in cliente_list %}randomColorGenerator(), {% endfor %}]
+          data: [{% for proveedor in proveedor_list %}'{{ proveedor.list|length }}', {% endfor %}],
+          backgroundColor: [{% for proveedor in proveedor_list %}randomColorGenerator(), {% endfor %}]
         }]
       },
       options: options
     });
-    // ctx = document.getElementById("item-chart");
-    // {% regroup cl.queryset|dictsort:"items" by items as items_list %}
-    // {% saludar cl.queryset as mapa %}
-    // // console.log("{{ cl.queryset|dictsort:'items' }}")
-    // // console.log("{{cl.queryset.0}}")
-    // // console.log("{{mapa}}")
-    // var lineChart = new Chart(ctx, {
-    //   type: 'doughnut',
-    //   data: {
-    //     labels: [{% for lbl in mapa %}"{{lbl}}", {% endfor %}],
-    //     datasets: [{
-    //       data: [{% for lbl, qty in mapa.items %}'{{ qty }}', {% endfor %}],
-    //       backgroundColor: [{% for lbl in mapa %}randomColorGenerator(), {% endfor %}]
-    //     }]
-    //   },
-    //   options: options
-    // });
   };
 
 </script> {% endblock %} {% block content %}
-<!-- <h1> Gráfico </h1> -->
 <hr>
 <div class="row">
   <div class="col-sm-4">
-    <!-- <h4>Clientes</h4> -->
     <canvas id="client-chart" style="width: 100px !important;"></canvas>
   </div>
-  <!-- <div class="col-sm-4">
-      <h4>Productos</h4>
-    <canvas id="item-chart" style="width: 100px !important;"></canvas>
-  </div> -->
 </div>
 <div class="row">
   <div><br><br><br><br></div>

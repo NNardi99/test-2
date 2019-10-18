@@ -31,7 +31,7 @@ class CompraAdmin(admin.ModelAdmin):
     form = ComprasForm
 
     list_display = ('codigo', 'comprador', 'proveedor', 'fecha', 'estado')
-    search_fields = ('comprador', 'proveedor', 'fecha', 'estado')
+    search_fields = ('comprador_id__first_name', 'comprador_id__last_name', 'proveedor_id__razon')
     list_filter = ('comprador', 'proveedor', 'fecha', 'estado')
     ordering = ('codigo',)
     change_list_template = 'admin/change_list_graph_buy.html'

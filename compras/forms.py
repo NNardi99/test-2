@@ -9,6 +9,7 @@ class MyForm(forms.ModelForm):
         cleaned_data = super().clean()
         # Limitador de stock
         product = cleaned_data.get("producto")
+        marca = cleaned_data.get("marca")
         cd_cantidad = cleaned_data.get("cantidad")
 
         if not product:

@@ -6,7 +6,7 @@ from administrador.models import Producto, CustomUser, Proveedor
 
 # # Create your models here.
 
-STATES = [('1','Pendiente'), ('2','Vendido'), ('3','Cancelado')]
+STATES = [('1','Pendiente'), ('2','Comprado'), ('3','Cancelado')]
 
 class Compra(models.Model):
     codigo = models.AutoField(primary_key=True)

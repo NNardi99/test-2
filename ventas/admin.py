@@ -31,7 +31,7 @@ class VentaAdmin(admin.ModelAdmin):
     form = VentasForm
 
     list_display = ('codigo', 'vendedor', 'cliente', 'fecha', 'estado')
-    search_fields = ('vendedor', 'cliente', 'fecha', 'estado')
+    search_fields = ('vendedor_id__first_name', 'vendedor_id__last_name', 'cliente_id__razon')
     list_filter = ('vendedor', 'cliente', 'fecha', 'estado')
     ordering = ('codigo',)
     change_list_template = 'admin/change_list_graph_sell.html'

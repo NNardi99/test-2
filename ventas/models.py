@@ -2,7 +2,7 @@ from django.db import models
 from smart_selects.db_fields import ChainedForeignKey
 from django.core.validators import MinValueValidator
 from datetime import date
-from administrador.models import Producto, CustomUser, Cliente
+from administrador.models import Producto, CustomUser, Cliente, Marca
 
 # # Create your models here.
 
@@ -22,7 +22,18 @@ class Venta(models.Model):
         super(Venta, self).delete(*args, **kwargs)
 
 class DetalleVenta(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
+    marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
+    # producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
+    producto = ChainedForeignKey(
+        Producto,
+        chained_field="marca",
+        chained_model_field="marca",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        null = True,
+        on_delete=models.PROTECT
+    )
     cantidad = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name="items")
 

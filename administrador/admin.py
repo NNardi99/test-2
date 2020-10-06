@@ -9,6 +9,11 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django import forms
 from administrador.forms import ClienteForm, ProveedorForm
+from django.http import HttpResponse
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.lib.units import inch, cm
+from reportlab.platypus import Table, TableStyle
+import time
 
 class ProvinciaAdmin(admin.ModelAdmin):
     list_display = ('id','provincia')
@@ -124,10 +129,34 @@ class CustomUserAdmin(UserAdmin):
                 username.save()
     change_active.short_description = 'Baja/Alta de Empleado'
 
-    list_display = ('id', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
+    def export_tables_as_pdf(self, request, queryset):
+
+        file_name = "table_entries{0}.pdf".format(time.strftime("%d-%m-%Y-%H-%M-%S"))
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name)
+
+        data = [['id', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active', 'last_login']]
+        for d in queryset.all():
+            item = [d.id, d.username, d.email, d.first_name, d.last_name, d.is_staff, d.is_active, d.last_login]
+            data.append(item)
+
+        doc = SimpleDocTemplate(response, pagesize=(21*inch, 29*inch))
+        elements = []
+
+        table_data = Table(data)
+        table_data.setStyle(TableStyle([('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                                        ('BOX', (0, 0), (-1, -1), 0.25, (0, 0, 0)),
+                                        ("FONTSIZE",  (0, 0), (-1, -1), 13)]))
+        elements.append(table_data)
+        doc.build(elements)
+
+        return response
+    export_tables_as_pdf.short_description = "Exportar Tabla como PDF"
+
+    list_display = ('id', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active', 'last_login')
     search_fields = ('username', 'first_name', 'last_name')
     list_filter = ('is_staff', 'is_active', 'groups')
-    actions = [change_active, ]
+    actions = [change_active, export_tables_as_pdf, ]
     ordering = ('id',)
     change_list_template = 'admin/change_list_graph_user.html'
 

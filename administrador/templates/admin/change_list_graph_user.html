@@ -23,7 +23,7 @@
     }
   };
   window.onload = function () {
-    var ctx = document.getElementById("active-chart");
+    var ctx = document.getElementById("login-chart");
     {% regroup cl.queryset|dictsort:"is_active" by is_active as is_active_list %}
     var lineChart = new Chart(ctx, {
       type: 'doughnut',
@@ -41,12 +41,12 @@
 </script> {% endblock %} {% block content %}
 <!-- <h1> Gráfico </h1> -->
 <hr>
-<div class="row">
+{% comment %} <div class="row">
   <div class="col-sm-4">
-    <canvas id="active-chart" style="width: 100px !important;"></canvas>
+    <canvas id="login-chart" style="width: 100px !important;"></canvas>
   </div>
 </div>
 <div class="row">
   <div><br><br><br><br></div>
-</div>
+</div> {% endcomment %}
 {{ block.super }} {% endblock %}

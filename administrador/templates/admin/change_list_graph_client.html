@@ -38,22 +38,22 @@
     }
   };
   window.onload = function () {
-    var ctx = document.getElementById("active-chart");
-    {% regroup cl.queryset|dictsort:"activo" by activo as activo_list %}
+    //var ctx = document.getElementById("active-chart");
+    //{% regroup cl.queryset|dictsort:"activo" by activo as activo_list %}
     // console.log("{{ cl.queryset|dictsort:"activo" }}")
     // console.log("{{cl.queryset.0.is_active}}")
-    var lineChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: [{% for activo in activo_list %} {% if activo.grouper == True %} 'Activo' {% else %} 'Inactivo' {% endif %} ,{% endfor %}],
-        datasets: [{
-          data: [{% for activo in activo_list %}'{{ activo.list|length }}', {% endfor %}],
-          backgroundColor: [{% for activo in activo_list %}randomColorGenerator(), {% endfor %}]
-        }]
-      },
-      options: optionsActividad
-    });
-    ctx = document.getElementById("localidad-chart");
+    //var lineChart = new Chart(ctx, {
+    //  type: 'doughnut',
+    //  data: {
+    //    labels: [{% for activo in activo_list %} {% if activo.grouper == True %} 'Activo' {% else %} 'Inactivo' {% endif %} ,{% endfor %}],
+    //    datasets: [{
+    //      data: [{% for activo in activo_list %}'{{ activo.list|length }}', {% endfor %}],
+    //      backgroundColor: [{% for activo in activo_list %}randomColorGenerator(), {% endfor %}]
+    //    }]
+    //  },
+    //  options: optionsActividad
+    //});
+    var ctx = document.getElementById("localidad-chart");
     {% regroup cl.queryset|dictsort:"localidad_id" by localidad as localidad_list %}
     var lineChart = new Chart(ctx, {
       type: 'doughnut',
@@ -72,9 +72,9 @@
 <!-- <h1> Gráfico </h1> -->
 <hr>
 <div class="row">
-  <div class="col-sm-4">
+  {% comment %} <div class="col-sm-4">
     <canvas id="active-chart" style="width: 100px !important;"></canvas>
-  </div>
+  </div> {% endcomment %}
   <div class="col-sm-4">
     <canvas id="localidad-chart" style="width: 100px !important;"></canvas>
   </div>

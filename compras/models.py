@@ -12,7 +12,7 @@ class Compra(models.Model):
     codigo = models.AutoField(primary_key=True)
     comprador = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT)
-    estado = models.CharField(max_length=100, choices=STATES)
+    # estado = models.CharField(max_length=100, choices=STATES)
     fecha = models.DateField(default=date.today)
 
     def delete(self, *args, **kwargs):
@@ -20,6 +20,9 @@ class Compra(models.Model):
             item.producto.stockAct-=item.cantidad
             item.producto.save()
         super(Compra, self).delete(*args, **kwargs)
+
+    def __str__(self):
+        return "al Proveedor {}".format(self.proveedor)
 
 class DetalleCompra(models.Model):
     marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
@@ -39,7 +42,11 @@ class DetalleCompra(models.Model):
 
     class Meta:
         verbose_name_plural = "Detalle de Compras"
-        verbose_name = "Detalle de Compra"
+        unique_together = ('compra', 'producto')
+        # verbose_name = "Detalle de Compra"
+
+    def __str__(self):
+        return "{}".format(self.producto)
 
 # Crear función para hacer override del save del model
     def save(self, *args, **kwargs):

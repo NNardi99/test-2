@@ -15,11 +15,12 @@ class MyForm(forms.ModelForm):
             self.add_error('producto', "Seleccione un producto")
         if cd_cantidad > product.stockAct:
             self.add_error('cantidad', "La cantidad no debe superar el stock actual de {}".format(product.stockAct))
-        
+
 class VentasForm(forms.ModelForm):
     fecha = forms.DateField(
         initial=date.today,
-        widget=forms.SelectDateWidget
+        widget=forms.SelectDateWidget(attrs = {
+                 }, years = range(2018, datetime.date.today().year+1),),
     )
         # Limitador de fecha
     def clean(self):

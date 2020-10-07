@@ -146,6 +146,9 @@ class Marca(models.Model):
     def __str__(self):
         return self.nombre
 
+    def __unicode__(self):
+        return u'%s' % (self.nombre)
+
 STOCK_UNIT_CHOICES = [('1','unidades'), ('2','pares'), ('3','litros')]
 
 class Producto(models.Model):
@@ -166,3 +169,6 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+    def __unicode__(self):
+        return u'%s' % (self.nombre)

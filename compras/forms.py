@@ -20,7 +20,8 @@ class MyForm(forms.ModelForm):
 class ComprasForm(forms.ModelForm):
     fecha = forms.DateField(
         initial=date.today,
-        widget=forms.SelectDateWidget
+        widget=forms.SelectDateWidget(attrs = {
+                 }, years = range(2018, datetime.date.today().year+1),),
     )
         # Limitador de fecha
     def clean(self):

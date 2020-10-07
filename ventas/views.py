@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from ventas.models import DetalleVenta
 from django.db.models import Sum
+
 # Create your views here.
 class Get5Products(TemplateView):
     template_name = "grafica_5_ventas.html"
